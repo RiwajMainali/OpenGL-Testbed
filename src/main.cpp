@@ -2,9 +2,13 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+void processInput(GLFWwindow *wd);
+
+ // changing size if the size of window changes
 void framebuffer_size_callback(GLFWwindow *wd, int width, int height) {
-  glViewport(0, 0, width, height);  // changing size if the size of window changes
+  glViewport(0, 0, width, height); 
 }
+
 int main() {
   glfwInit();
   if (!glfwInit()) {
@@ -31,14 +35,40 @@ int main() {
   }
   glViewport(0, 0, 800, 600);  // telling OpenGL the size of the window
 
-  glfwSetFramebufferSizeCallback(
-      wd, framebuffer_size_callback);  // making sure that the window gets resized every frame
+  glfwSetFramebufferSizeCallback(wd, framebuffer_size_callback);//so that window gets resized every frame
+    while (!glfwWindowShouldClose(wd)) {  // loops every frame
+    processInput(wd);
+    //render here
 
-  while (!glfwWindowShouldClose(wd)) {	//loops every frame
-    glfwSwapBuffers(wd);	//swaps the buffer so that we can work on it and it displays the one we already finished writing to
-    glfwPollEvents();		//checks for events activations like key pressed
+    
+    glfwSwapBuffers(wd);  // swaps the buffer so that we can work on it and displays the one we already finished writing to
+    glfwPollEvents();   // checks for events activations like key pressed
+    
   }
+
+  //the general format is 
+  //inputs
+  //render
+  //pollEvents
+  //swapBuffer
 
   glfwTerminate();
   return 0;
 }
+void processInput(GLFWwindow *wd) {
+  if (glfwGetKey(wd, GLFW_KEY_ESCAPE)) glfwSetWindowShouldClose(wd, true);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
