@@ -20,14 +20,24 @@ To run the project
 
   # Roadmap
   ~~Window~~
+  
   Triangle
+  
   Shaders
+  
   Textures
+  
   Transformation
+  
   Coordinate system
+  
   Camera
+  
   Colors
+  
   Basic lightings
+  
   Model Loading
+  
   Shadows
   
