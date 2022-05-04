@@ -1,5 +1,3 @@
-# OpenGL-Raytracer
-
 # Requirements
 
   Ninja
@@ -20,4 +18,16 @@ To run the project
 
     make d
 
+  # Roadmap
+  ~~Window~~
+  Triangle
+  Shaders
+  Textures
+  Transformation
+  Coordinate system
+  Camera
+  Colors
+  Basic lightings
+  Model Loading
+  Shadows
   
