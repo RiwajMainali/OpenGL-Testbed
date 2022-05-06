@@ -18,8 +18,8 @@ int main() {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-
+  glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+  unsigned int VBO;
   // making  a pointer to a window
   GLFWwindow *wd = glfwCreateWindow(800, 600, "OpenGL", NULL, NULL);
 
@@ -35,12 +35,34 @@ int main() {
   }
   glViewport(0, 0, 800, 600);  // telling OpenGL the size of the window
 
+float vertices[]={
+  -0.5f, -0.5f,1.0f,
+  0.5f,  0.5f,1.0f,
+  0.0f, 0.5f, 1.0f,
+};
+
+  glGenBuffers(1,&VBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices),vertices,GL_STATIC_DRAW);
+
+  //vertexShaderSource is GLSL code that will run in gpu
+  //it is 
+  const char *vertexShaderSource = "#version 330 core\n"
+  "layout (location = 0) in vec3 aPos"        //location means you use this specific location for this datatype aka aPos
+  "void main()\n"
+  "{gl_Position = vec4(aPos.x,aPos.y,aPos.z, 1.0);}\0";
+  unsigned int vertexShader;    //creating a shader
+  vertexShader = glCreateShader(GL_VERTEX_SHADER);    //inititalize shader, tag vertexShader as a shader 
+  glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+  //takes shader, no of variables in vertexShaderSource and the vertexShaderSource, NULL
+  
+  int success; 
   glfwSetFramebufferSizeCallback(wd, framebuffer_size_callback);//so that window gets resized every frame
     while (!glfwWindowShouldClose(wd)) {  // loops every frame
     processInput(wd);
     //render here
+    glClearColor(0.2f, 0.4f, 1.0f,1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 
-    
     glfwSwapBuffers(wd);  // swaps the buffer so that we can work on it and displays the one we already finished writing to
     glfwPollEvents();   // checks for events activations like key pressed
     
