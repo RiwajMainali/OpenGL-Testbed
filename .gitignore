@@ -1,3 +1,9 @@
 \build
 \.cache
 \.vscode
+\.editorconfig
+\.clang-format
+\.cache
+\.vscode
+\.CMakeLists.txt
+\.Makefile
