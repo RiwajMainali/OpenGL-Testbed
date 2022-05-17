@@ -1,0 +1,5 @@
+b:
+	cmake -B build/debug -G "Ninja" .
+d:
+	ninja -C build/debug
+	./build/debug/run.exe

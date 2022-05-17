@@ -56,13 +56,63 @@ float vertices[]={
   //takes shader, no of variables in vertexShaderSource and the vertexShaderSource, NULL
   
   int success; 
+  char infoLog[512];
+  glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);   //used to check if shader compiled. 
+
+  if(!success){
+    glGetShaderInfoLog(vertexShader, 512, NULL, infoLog); //retriving error logs.
+    std::cout<<"ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog <<std::endl;
+  }
+
+
+  const char *fragmentShaderSource= "#version 330 core\n"   //shader to add color to triangle
+  "out vec4 FragColor;\n"
+  "void main(){\n"
+  "FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);}\0";
+
+  unsigned int fragmentShader;    //create a fragmentShader object
+  fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);    //initializes Shader and tags it as a fragment Shader
+  glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL); 
+  //takes shader, no of variables in fragmentShaderSource and the fragmentShaderSource, NULL 
+  glCompileShader(fragmentShader);
+  
+  unsigned int shaderProgram;
+  shaderProgram = glCreateProgram();
+
+  glAttachShader(shaderProgram, vertexShader);
+  glAttachShader(shaderProgram, fragmentShader);
+  glLinkProgram(shaderProgram);
+  glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+  if(!success){
+    glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+    std::cout<<"ERROR::PROGRAM::COMPILATION_FAILED " << infoLog <<std::endl;
+  }
+
+  glUseProgram(shaderProgram);
+
+  glDeleteShader(vertexShader);
+  glDeleteShader(fragmentShader);
+  //we delete these cuz we have shaderProgram and we don't need them anymore
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 3* sizeof(float), (void*)0);
+  //location, size, datatype, normalized or not, stride size, ____
+  glEnableVertexAttribArray(0);
+  //location as its args
+  //telling how OpenGL should interpret verted data and how to link to shaders
+  //each vertex has strides, which are seperated into diff variables like x,y,z
+
+
+
   glfwSetFramebufferSizeCallback(wd, framebuffer_size_callback);//so that window gets resized every frame
     while (!glfwWindowShouldClose(wd)) {  // loops every frame
     processInput(wd);
-    //render here
-    glClearColor(0.2f, 0.4f, 1.0f,1.0f);
+    //copying data to buffer for OPENGL to use
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    
+    
+    glClearColor(0.2f, 0.1f, 0.0f,1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-
+    
     glfwSwapBuffers(wd);  // swaps the buffer so that we can work on it and displays the one we already finished writing to
     glfwPollEvents();   // checks for events activations like key pressed
     
@@ -73,7 +123,6 @@ float vertices[]={
   //render
   //pollEvents
   //swapBuffer
-
   glfwTerminate();
   return 0;
 }
