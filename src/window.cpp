@@ -9,7 +9,7 @@
 void processInput(GLFWwindow *window){
   if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS){
     glfwSetWindowShouldClose(window, true);
-    
+
   }
 }
 int main(){
@@ -35,13 +35,13 @@ int main(){
 
   void framebuffer_size_callback (GLFWwindow* window, int width, int height);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-  
+
   while(!glfwWindowShouldClose(window)){
     //input stuff here
     processInput(window);
-    
+
     //render stuff here
-    glClearColor(0.1f,0.1f,0.7f,1.0f);
+    glClearColor(0.1f,0.9f,0.1f,1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     //swap buffer and check for events here
     glfwSwapBuffers(window);
