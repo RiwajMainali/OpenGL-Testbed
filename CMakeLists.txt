@@ -10,13 +10,10 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS ON)  #for lsp and clangd
 set (GLFW_BUILD_DOCS FALSE)
 set (GLFW_BUILD_TESTS FALSE)
 set (GLFW_BUILD_EXAMPLES FALSE) 
-add_executable(run src/window.cpp)
+add_executable(run src/triangle.cpp)
 
 
 add_subdirectory(glfw)
 add_subdirectory(glad)
 
 target_link_libraries(run glfw glad)
-
-
-

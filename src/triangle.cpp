@@ -46,7 +46,7 @@ int main() {
   // glViewport(0,0,800,600); this is redundent cuz we have a framebuffer size
   // callback function that checks for size every frame
 
-  unsigned int VBOm VAO;
+  unsigned int VBO, VAO;
   glGenBuffers(1, VBO);               // size, VBO
   glBindBuffer(GL_ARRAY_BUFFER, VBO); // bind VBO to array buffer
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -97,10 +97,10 @@ int main() {
   glEnableVertexAttribArray(0);
 
   glGenVertexArrays(1, &VAO);
-  
+
 
   void framebuffer_size_callback(GLFWwindow * window, int width, int height);
-  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback)
+  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
   while (!glfwWindowShouldClose(window)) {
     // input stuff here
     processInput(window);
@@ -110,6 +110,9 @@ int main() {
     glClear(GL_COLOR_BUFFER_BIT);
     // swap buffer and check for events here
     glUseProgram(shaderProgram);
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
     glfwSwapBuffers(window);
 
     glfwPollEvents();
