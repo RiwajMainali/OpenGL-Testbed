@@ -11,7 +11,7 @@ OpenGL
   
   ~~Window~~
   
-  Triangle
+  ~~Triangle~~
   
   Shaders
   
